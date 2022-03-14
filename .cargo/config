@@ -1,4 +1,5 @@
 [alias]
 wasm = "build --release --target wasm32-unknown-unknown"
+optimize = "run-script optimize"
 unit-test = "test --lib"
 schema = "run --example schema"
