@@ -45,6 +45,11 @@ pub fn execute(
 }
 
 pub fn try_increment(deps: DepsMut) -> Result<Response, ContractError> {
+    /* GO STYLE
+    let mut state = STATE.load(deps.storage)?;
+    state.count += 1;
+    STATE.save(deps.storage, &state)?;
+    */
     STATE.update(deps.storage, |mut state| -> Result<_, ContractError> {
         state.count += 1;
         Ok(state)
@@ -53,6 +58,14 @@ pub fn try_increment(deps: DepsMut) -> Result<Response, ContractError> {
     Ok(Response::new().add_attribute("method", "try_increment"))
 }
 pub fn try_reset(deps: DepsMut, info: MessageInfo, count: i32) -> Result<Response, ContractError> {
+    /* GO STYLE
+    let mut state = STATE.load(deps.storage)?;
+    if info.sender != state.owner {
+        return Err(ContractError::Unauthorized {});
+    }
+    state.count = count;
+    STATE.save(deps.storage, &state)?;
+    */
     STATE.update(deps.storage, |mut state| -> Result<_, ContractError> {
         if info.sender != state.owner {
             return Err(ContractError::Unauthorized {});
